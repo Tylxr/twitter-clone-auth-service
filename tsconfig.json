@@ -1,27 +1,18 @@
 {
     "compilerOptions": {
-        "module": "commonjs",
         "esModuleInterop": true,
-        "target": "es6",
-        "noImplicitAny": true,
-        "moduleResolution": "node",
-        "sourceMap": true,
+        "skipLibCheck": true,
+        "target": "es2022",
+        "allowJs": true,
+        "resolveJsonModule": true,
+        "moduleDetection": "force",
+        "noUncheckedIndexedAccess": true,
+        "moduleResolution": "NodeNext",
+        "module": "NodeNext",
         "outDir": "dist",
-        "baseUrl": ".",
-        "paths": {
-            "*": [
-                "node_modules/*"
-            ]
-        },
-        "typeRoots": [
-            "./node_modules/@types"
-        ]
-    },
-    "include": [
-        "server.ts",
-        "src/**/*"
-    ],
-    "ts-node": {
-        "files": true
+        "sourceMap": true,
+        "lib": [
+            "es2022"
+        ],
     }
 }
