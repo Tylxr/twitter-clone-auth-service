@@ -1,9 +1,9 @@
-import { compareSync, hashSync } from "bcryptjs";
-import { Schema, model } from "mongoose";
-import { IUserDocument } from "src/types";
+import bcrypt, { compareSync, hashSync } from "bcryptjs";
+import mongoose, { Schema, model } from "mongoose";
+import { IUserMongooseModel, UserMongooseDocument } from "../types";
 
 // Schema
-const userSchema: Schema = new Schema({
+const userSchema: Schema = new Schema<UserMongooseDocument, IUserMongooseModel>({
 	username: {
 		type: String,
 		required: true,
@@ -25,25 +25,26 @@ userSchema.pre("save", function (next) {
 // Options
 userSchema.set("toJSON", {
 	virtuals: true,
-	transform: (_, obj: IUserDocument) => {
+	transform: (_, obj: UserMongooseDocument) => {
 		delete obj.password;
 		return obj;
 	},
 });
 userSchema.set("toObject", {
 	virtuals: true,
-	transform: (_, obj: IUserDocument) => {
-		delete obj.Password;
+	transform: (_, obj: UserMongooseDocument) => {
+		delete obj.password;
 		return obj;
 	},
 });
 
-// Methods
-userSchema.methods.comparePasswords = function (this: IUserDocument, password: string): boolean {
-	return compareSync(password, this.Password);
-};
+// Statics
+
+userSchema.static("getByUsername", async function (username: string) {
+	return await this.findOne({ username });
+});
 
 // Indexes
-// TODO
+userSchema.index({ username: 1 });
 
-export default model("User", userSchema);
+export default model<UserMongooseDocument, IUserMongooseModel>("User", userSchema);
