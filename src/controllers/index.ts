@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { model } from "mongoose";
 import { registerUser } from "../services";
-import { IUserMongooseModel, UserMongooseDocument } from "../types";
+import { IUserMongooseModel, UserMongooseDocument } from "../types/user";
 
 export async function register(req: Request, res: Response, next: NextFunction) {
 	try {

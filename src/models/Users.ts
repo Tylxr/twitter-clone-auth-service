@@ -1,6 +1,6 @@
 import bcrypt, { compareSync, hashSync } from "bcryptjs";
 import mongoose, { Schema, model } from "mongoose";
-import { IUserMongooseModel, UserMongooseDocument } from "../types";
+import { IUserMongooseModel, UserMongooseDocument } from "../types/user";
 
 // Schema
 const userSchema: Schema = new Schema<UserMongooseDocument, IUserMongooseModel>({
