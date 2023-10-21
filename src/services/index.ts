@@ -16,7 +16,7 @@ export async function registerUser(username: string, password: string, userModel
 	await user.save();
 
 	// Sign JWT
-	const token = jwt.sign(username, process.env.jwt_secret, { expiresIn: 1000 * 60 * 5 });
+	const token = jwt.sign(username, process.env.jwt_secret, { expiresIn: 60 * 5 });
 
 	// Return successful and send jwt
 	return { error: false, token };

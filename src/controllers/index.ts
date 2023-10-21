@@ -1,17 +1,18 @@
 import { Request, Response, NextFunction } from "express";
-import { model } from "mongoose";
+import mongoose from "mongoose";
 import { registerUser } from "../services";
 import { IUserMongooseModel, UserMongooseDocument } from "../types/user";
+import { RegisterResult } from "../types/response";
 
 export async function register(req: Request, res: Response, next: NextFunction) {
 	try {
-		const userModel: IUserMongooseModel = model<UserMongooseDocument, IUserMongooseModel>("Users");
+		const userModel: IUserMongooseModel = mongoose.model<UserMongooseDocument, IUserMongooseModel>("User");
 		const { username, password } = req.body;
-		const response = await registerUser(username, password, userModel);
-		console.log(response);
+		const response: RegisterResult = await registerUser(username, password, userModel);
+		return res.send(response);
 	} catch (err) {
 		console.error(err);
-		res.sendStatus(500);
+		return res.sendStatus(500);
 	}
 }
 export function login(req: Request, res: Response, next: NextFunction) {

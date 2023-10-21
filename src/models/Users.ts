@@ -1,5 +1,5 @@
-import bcrypt, { compareSync, hashSync } from "bcryptjs";
-import mongoose, { Schema, model } from "mongoose";
+import { hashSync } from "bcryptjs";
+import mongoose, { Schema } from "mongoose";
 import { IUserMongooseModel, UserMongooseDocument } from "../types/user";
 
 // Schema
@@ -39,7 +39,6 @@ userSchema.set("toObject", {
 });
 
 // Statics
-
 userSchema.static("getByUsername", async function (username: string) {
 	return await this.findOne({ username });
 });
@@ -47,4 +46,4 @@ userSchema.static("getByUsername", async function (username: string) {
 // Indexes
 userSchema.index({ username: 1 });
 
-export default model<UserMongooseDocument, IUserMongooseModel>("User", userSchema);
+export default mongoose.model<UserMongooseDocument, IUserMongooseModel>("User", userSchema);
