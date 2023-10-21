@@ -1,4 +1,4 @@
-import { IAPIResponse } from "../types/response";
+import { IAPIResponse, IIsAuthenticatedResponse, LoginResponse } from "../types/response";
 import { IGenericUserModel } from "../types/user";
 import jwt from "jsonwebtoken";
 
@@ -19,7 +19,7 @@ export async function registerUser(username: string, password: string, userModel
 	return { error: false };
 }
 
-export async function loginUser(username: string, password: string, userModel: IGenericUserModel) {
+export async function loginUser(username: string, password: string, userModel: IGenericUserModel): Promise<LoginResponse> {
 	// Basic validation
 	if (!username || !password || username.length < 4 || password.length < 6) {
 		return { error: true, errorMessage: "Username/password validation has failed." };
@@ -42,6 +42,15 @@ export async function loginUser(username: string, password: string, userModel: I
 	// Return successful and send token
 	return { error: false, token };
 }
-export function isUserAuthenticated() {}
+export function isUserAuthenticated(token: string): IIsAuthenticatedResponse {
+	try {
+		// Verify token
+		const response = jwt.verify(token, process.env.jwt_secret);
+		return { error: false, authenticated: !!response };
+	} catch (err) {
+		console.error(err);
+		return { error: true, authenticated: false };
+	}
+}
 
 function refreshToken() {}

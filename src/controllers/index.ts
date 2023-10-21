@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import mongoose from "mongoose";
-import { registerUser, loginUser } from "../services";
+import { registerUser, loginUser, isUserAuthenticated } from "../services";
 import { IUserMongooseModel, IUserMongooseDocument } from "../types/user";
 import { IAPIResponse } from "../types/response";
 
@@ -27,5 +27,13 @@ export async function login(req: Request, res: Response, next: NextFunction) {
 	}
 }
 export function isAuthenticated(req: Request, res: Response, next: NextFunction) {
+	try {
+		const { token } = req.body;
+		const response = isUserAuthenticated(token);
+		return res.send(response);
+	} catch (err) {
+		console.error(err);
+		return res.sendStatus(500);
+	}
 	// call service
 }
