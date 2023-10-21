@@ -3,12 +3,14 @@ export interface IAPIResponse {
 	errorMessage?: string;
 }
 
-export type LoginResponse =
+export type AuthResponse =
 	| IAPIResponse
 	| {
 			token: string;
+			refreshToken: string;
 	  };
 
-export interface IIsAuthenticatedResponse extends IAPIResponse {
+export type AuthGuardResponse = {
 	authenticated: boolean;
-}
+	expired: boolean;
+};
