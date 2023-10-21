@@ -7,6 +7,7 @@ export interface IUserObject {
 }
 export interface IUserDocument extends IUserObject {
 	save(): Promise<IUserObject>;
+	comparePassword(password: string): boolean;
 }
 export interface IGenericUserModel {
 	getByUsername(username: string): IUserDocument;
@@ -14,8 +15,10 @@ export interface IGenericUserModel {
 }
 
 // Mongoose concretions
-export type UserMongooseDocument = IUserObject & Document;
-export interface IUserMongooseModel extends Model<UserMongooseDocument> {
-	getByUsername(username: string): UserMongooseDocument;
-	save(): Promise<UserMongooseDocument>;
+export interface IUserMongooseDocument extends IUserObject, Document {
+	comparePassword(password: string): boolean;
+}
+export interface IUserMongooseModel extends Model<IUserMongooseDocument> {
+	getByUsername(username: string): IUserMongooseDocument;
+	save(): Promise<IUserMongooseDocument>;
 }
