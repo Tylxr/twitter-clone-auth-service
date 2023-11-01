@@ -27,14 +27,15 @@ export async function login(req: Request, res: Response, next: NextFunction) {
 	}
 }
 
-export function authenticationGuard(req: Request, res: Response, next: NextFunction) {
+export function authenticated(req: Request, res: Response, next: NextFunction) {
 	try {
-		const { token } = req.body;
+		const token = req.headers.authorization && req.headers.authorization.split(" ")?.[1];
+		if (!token) throw Error("No bearer token supplied.");
 		const response = isUserAuthenticated(token);
-		return response.authenticated ? next() : res.status(401).send(response);
+		return response.authenticated ? res.sendStatus(200) : res.sendStatus(401);
 	} catch (err) {
 		console.error(err);
-		return res.sendStatus(500);
+		return res.status(400).send({ message: err.message });
 	}
 }
 
