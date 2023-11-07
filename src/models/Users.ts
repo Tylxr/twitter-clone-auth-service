@@ -6,6 +6,9 @@ import { IUserMongooseModel, IUserMongooseDocument } from "../types/user";
 const userSchema: Schema = new Schema<IUserMongooseDocument, IUserMongooseModel>({
 	username: {
 		type: String,
+		unique: true,
+		minLength: 4,
+		maxLength: 25,
 		required: true,
 	},
 	password: {
