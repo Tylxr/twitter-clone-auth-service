@@ -11,7 +11,7 @@ export interface IUserDocument extends IUserObject {
 }
 export interface IGenericUserModel {
 	getByUsername(username: string): IUserDocument;
-	new (IUserObject): IUserDocument;
+	new (object: IUserObject): IUserDocument;
 }
 
 // Mongoose concretions
