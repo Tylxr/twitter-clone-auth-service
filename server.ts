@@ -1,10 +1,9 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 import app from "./src/app";
 import http from "http";
 import mongoose from "mongoose";
-import dotenv from "dotenv";
-
-// Configure dotenv
-dotenv.config();
 
 const port = process.env.PORT || "3000";
 const server = http.createServer(app);
@@ -14,7 +13,7 @@ server.listen(port, async () => {
 	console.log(`Attempting to connect to mongo instance...`);
 
 	try {
-		const mongoDBConnectionString = `mongodb://${process.env.mongodb_username}:${process.env.mongodb_password}@${process.env.mongodb_host}:27017/${process.env.mongodb_db}?authSource=admin`;
+		const mongoDBConnectionString = `mongodb://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@${process.env.MONGODB_HOST}:27017/${process.env.MONGODB_DB}?authSource=admin`;
 		await mongoose.connect(mongoDBConnectionString);
 		console.log("✅ Connected to MongoDB successfully via Mongoose.");
 	} catch (err) {
