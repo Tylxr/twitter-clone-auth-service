@@ -1,3 +1,5 @@
+import { JwtPayload } from "jsonwebtoken";
+
 export interface IAPIResponse {
 	error: boolean;
 	errorMessage?: string;
@@ -12,10 +14,11 @@ export type AuthResponse =
 			refreshToken: string;
 	  };
 
-export type AuthGuardResponse = {
+export interface IAuthGuardResponse {
 	authenticated: boolean;
 	expired: boolean;
-};
+	tokenPayload?: JwtPayload;
+}
 
 export interface INetworkRequestInstance {
 	get<C, R = INetworkResponse>(url: string, config?: C): Promise<R>;

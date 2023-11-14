@@ -1,4 +1,4 @@
-import { IAPIResponse, AuthGuardResponse, AuthResponse, INetworkRequestInstance } from "../types/network";
+import { IAPIResponse, IAuthGuardResponse, AuthResponse, INetworkRequestInstance } from "../types/network";
 import { IGenericUserModel } from "../types/user";
 import jwt, { JwtPayload } from "jsonwebtoken";
 
@@ -71,19 +71,19 @@ export async function loginUser(username: string, password: string, userModel: I
 	}
 
 	// Create tokens
-	const token = jwt.sign({ username }, process.env.JWT_SECRET, { expiresIn: parseInt(process.env.JWT_REFRESH_SECRET) });
+	const token = jwt.sign({ username }, process.env.JWT_SECRET, { expiresIn: parseInt(process.env.TOKEN_EXPIRY) });
 	const refreshToken = jwt.sign({ username }, process.env.JWT_REFRESH_SECRET, { expiresIn: process.env.REFRESH_TOKEN_EXPIRY });
 
 	// Return successful and send tokens
 	return { error: false, token, refreshToken };
 }
-export function isUserAuthenticated(token: string): AuthGuardResponse {
+export function isUserAuthenticated(token: string): IAuthGuardResponse {
 	try {
 		// Verify token
-		const response = jwt.verify(token, process.env.JWT_SECRET);
+		const response: JwtPayload = jwt.verify(token, process.env.JWT_SECRET) as JwtPayload;
 
 		// Return successful
-		return { authenticated: !!response, expired: false };
+		return { authenticated: !!response, expired: false, tokenPayload: response };
 	} catch (err) {
 		console.error(err);
 		return { authenticated: false, expired: err.name === "TokenExpiredError" };
