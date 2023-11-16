@@ -10,7 +10,7 @@ export interface IUserDocument extends IUserObject {
 	comparePassword(password: string): boolean;
 }
 export interface IGenericUserModel {
-	getByUsername(username: string): IUserDocument;
+	getByUsername(username: string): Promise<IUserDocument>;
 	new (object: IUserObject): IUserDocument;
 }
 
@@ -19,6 +19,6 @@ export interface IUserMongooseDocument extends IUserObject, Document {
 	comparePassword(password: string): boolean;
 }
 export interface IUserMongooseModel extends Model<IUserMongooseDocument> {
-	getByUsername(username: string): IUserMongooseDocument;
+	getByUsername(username: string): Promise<IUserMongooseDocument>;
 	save(): Promise<IUserMongooseDocument>;
 }
