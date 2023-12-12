@@ -39,7 +39,7 @@ export async function registerUser(
 
 		// Saving a user has failed, we need to delete the user profile account in the core service
 		await coreInstance.delete("/userProfile", { data: { username } });
-		//! Checking if the deletion was successful or having a cleanup CRON job for these requests that fail is
+		//! Checking if the deletion was successful or having a cleanup CRON job for any of these requests that fail is
 		//! out of the scope of this project but would be needed in production.
 
 		return { error: true, errorMessage: "Error registering user." };
