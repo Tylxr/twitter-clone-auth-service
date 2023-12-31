@@ -85,7 +85,7 @@ export function isUserAuthenticated(token: string): IAuthGuardResponse {
 		// Return successful
 		return { authenticated: !!response, expired: false, tokenPayload: response };
 	} catch (err) {
-		console.error(err);
+		console.error(err.message);
 		return { authenticated: false, expired: err.name === "TokenExpiredError" };
 	}
 }
