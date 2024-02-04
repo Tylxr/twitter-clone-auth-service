@@ -5,7 +5,7 @@ import app from "./src/app";
 import http from "http";
 import mongoose from "mongoose";
 
-const port = process.env.PORT || "3000";
+const port = process.env.PORT || "2000";
 const server = http.createServer(app);
 
 server.listen(port, async () => {
