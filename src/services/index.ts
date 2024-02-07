@@ -1,4 +1,4 @@
-import { IAPIResponse, IAuthGuardResponse, AuthResponse, INetworkRequestInstance } from "../types/network";
+import { APIResponse, IAuthGuardResponse, AuthResponse, INetworkRequestInstance } from "../types/network";
 import { IGenericUserModel } from "../types/user";
 import jwt, { JwtPayload } from "jsonwebtoken";
 
@@ -7,7 +7,7 @@ export async function registerUser(
 	password: string,
 	userModel: IGenericUserModel,
 	coreInstance: INetworkRequestInstance,
-): Promise<IAPIResponse> {
+): Promise<APIResponse> {
 	// Basic validation
 	if (!username || !password || username.length < 4 || password.length < 6) {
 		return { error: true, errorMessage: "Username/password validation has failed." };

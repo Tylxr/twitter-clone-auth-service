@@ -1,15 +1,15 @@
 import { JwtPayload } from "jsonwebtoken";
 
-export interface IAPIResponse {
+export type APIResponse = {
 	error: boolean;
 	errorMessage?: string;
 	message?: string;
-}
+};
 
 export type AuthResponse =
-	| IAPIResponse
+	| APIResponse
 	| {
-			error: boolean;
+			error: false;
 			token: string;
 			refreshToken: string;
 	  };
