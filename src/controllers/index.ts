@@ -42,9 +42,8 @@ export async function login(req: Request, res: Response, next: NextFunction) {
 export function authenticated(req: Request, res: Response, next: NextFunction) {
 	try {
 		const token = req.headers.authorization && req.headers.authorization.split(" ")?.[1];
-		if (!token) throw Error("No bearer token supplied.");
 		const response: IAuthGuardResponse = isUserAuthenticated(token);
-		return res.status(response.authenticated ? 200 : 401).send(response);
+		return res.status(response.error || ("authenticated" in response && response.authenticated) ? 200 : 401).send(response);
 	} catch (err) {
 		console.error(err);
 		return res.status(500);

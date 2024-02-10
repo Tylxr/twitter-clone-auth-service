@@ -14,11 +14,14 @@ export type AuthResponse =
 			refreshToken: string;
 	  };
 
-export interface IAuthGuardResponse {
-	authenticated: boolean;
-	expired: boolean;
-	tokenPayload?: JwtPayload;
-}
+export type IAuthGuardResponse =
+	| APIResponse
+	| {
+			error: boolean;
+			authenticated: boolean;
+			expired: boolean;
+			tokenPayload?: JwtPayload;
+	  };
 
 export interface INetworkRequestInstance {
 	get<C, R = INetworkResponse>(url: string, config?: C): Promise<R>;

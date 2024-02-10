@@ -78,15 +78,16 @@ export async function loginUser(username: string, password: string, userModel: I
 	return { error: false, token, refreshToken };
 }
 export function isUserAuthenticated(token: string): IAuthGuardResponse {
+	if (!token) return { error: true, errorMessage: "No bearer token supplied." };
 	try {
 		// Verify token
 		const response: JwtPayload = jwt.verify(token, process.env.JWT_SECRET) as JwtPayload;
 
 		// Return successful
-		return { authenticated: !!response, expired: false, tokenPayload: response };
+		return { error: false, authenticated: !!response, expired: false, tokenPayload: response };
 	} catch (err) {
 		console.error(err.message);
-		return { authenticated: false, expired: err.name === "TokenExpiredError" };
+		return { error: true, authenticated: false, expired: err.name === "TokenExpiredError" };
 	}
 }
 
