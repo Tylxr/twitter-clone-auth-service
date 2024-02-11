@@ -102,7 +102,7 @@ export function refreshAuthToken(refreshToken: string): AuthResponse {
 			delete payload.iat;
 
 			// Create tokens
-			const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: parseInt(process.env.JWT_REFRESH_SECRET) });
+			const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: parseInt(process.env.TOKEN_EXPIRY) });
 			const refreshToken = jwt.sign(payload, process.env.JWT_REFRESH_SECRET, { expiresIn: process.env.REFRESH_TOKEN_EXPIRY });
 
 			// Return successful and send tokens
