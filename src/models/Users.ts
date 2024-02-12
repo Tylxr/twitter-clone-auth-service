@@ -14,6 +14,8 @@ const userSchema: Schema = new Schema<IUserMongooseDocument, IUserMongooseModel>
 	password: {
 		type: String,
 		required: true,
+		minLength: 6,
+		maxLength: 25,
 	},
 });
 
