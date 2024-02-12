@@ -13,7 +13,7 @@ export async function register(req: Request, res: Response, next: NextFunction) 
 		return res.status(response.error ? 400 : 201).send(response);
 	} catch (err) {
 		console.error(err);
-		return res.sendStatus(500);
+		return res.status(500).send({ error: true });
 	}
 }
 export async function login(req: Request, res: Response, next: NextFunction) {
@@ -35,7 +35,7 @@ export async function login(req: Request, res: Response, next: NextFunction) {
 		return res.status(400).send(response);
 	} catch (err) {
 		console.error(err);
-		return res.sendStatus(500);
+		return res.status(500).send({ error: true });
 	}
 }
 
@@ -46,7 +46,7 @@ export function authenticated(req: Request, res: Response, next: NextFunction) {
 		return res.status("authenticated" in response && response.authenticated ? 200 : 401).send(response);
 	} catch (err) {
 		console.error(err);
-		return res.status(500);
+		return res.status(500).send({ error: true });
 	}
 }
 
@@ -70,6 +70,6 @@ export function refresh(req: Request, res: Response, next: NextFunction) {
 		return res.status(400).send(response);
 	} catch (err) {
 		console.error(err);
-		return res.sendStatus(500);
+		return res.status(500).send({ error: true });
 	}
 }

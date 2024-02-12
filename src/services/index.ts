@@ -12,6 +12,7 @@ export async function registerUser(
 	if (!username || !password || username.length < 4 || password.length < 6) {
 		return { error: true, errorMessage: "Username/password validation has failed." };
 	}
+
 	try {
 		// Ensure user doesn't already exist - based off of username
 		const existingUser = await userModel.getByUsername(username);
