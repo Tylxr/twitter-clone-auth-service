@@ -23,7 +23,7 @@ export async function login(req: Request, res: Response, next: NextFunction) {
 		const response: AuthResponse = await loginUser(username, password, userModel);
 		if ("token" in response && !response.error) {
 			res.cookie("twitter_token", response.token, {
-				expires: new Date(new Date().getTime() + 60 * 1000),
+				expires: new Date(new Date().getTime() + 60 * 5 * 1000),
 			});
 			res.cookie("twitter_refresh_token", response.refreshToken, {
 				expires: new Date(new Date().getTime() + 60 * 60 * 24 * 1000),
@@ -52,12 +52,15 @@ export function authenticated(req: Request, res: Response, next: NextFunction) {
 
 export function refresh(req: Request, res: Response, next: NextFunction) {
 	try {
-		const { refreshToken } = req.body;
+		// Support refreshing from both f/e and b/e
+		let refreshToken = req.body.refreshToken;
+		if (!refreshToken) refreshToken = req.cookies.twitter_refresh_token;
+
 		const response: AuthResponse = refreshAuthToken(refreshToken);
 
 		if ("token" in response && !response.error) {
 			res.cookie("twitter_token", response.token, {
-				expires: new Date(new Date().getTime() + 60 * 1000),
+				expires: new Date(new Date().getTime() + 60 * 5 * 1000),
 			});
 			res.cookie("twitter_refresh_token", response.refreshToken, {
 				expires: new Date(new Date().getTime() + 60 * 60 * 24 * 1000),
