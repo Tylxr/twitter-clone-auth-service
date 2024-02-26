@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import { registerUser, loginUser, isUserAuthenticated, refreshAuthToken } from "../services";
 import { IUserMongooseModel, IUserMongooseDocument } from "../types/user";
 import { AuthResponse, APIResponse, IAuthGuardResponse } from "../types/network";
-import coreInstance from "../utils/coreInstance";
+import coreInstance from "../connections/coreInstance";
 
 export async function register(req: Request, res: Response, next: NextFunction) {
 	try {
