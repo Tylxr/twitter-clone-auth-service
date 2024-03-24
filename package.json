@@ -4,7 +4,8 @@
 	"private": true,
 	"scripts": {
 		"dev": "NODE_ENV=local nodemon",
-		"start": "NODE_ENV=production nodemon"
+		"start": "NODE_ENV=production nodemon",
+        "containerize": "docker run --name twitter-clone-auth-service -p 2000:2000 --network twitter-clone-network --env-file .env -d auth-service"
 	},
 	"dependencies": {
 		"axios": "^1.6.1",
